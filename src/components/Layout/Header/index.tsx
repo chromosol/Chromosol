@@ -199,7 +199,7 @@ const Header: React.FC = () => {
               aria-label="Close menu Modal"
             ></button>
           </div>
-          {/* <nav className="flex flex-col items-start p-4">
+          <nav className="flex flex-col items-start p-4">
             {headerData.map((item, index) => (
               <MobileHeaderLink key={index} item={item} />
             ))}
@@ -225,7 +225,7 @@ const Header: React.FC = () => {
                 Sign Up
               </Link>
             </div>
-          </nav> */}
+          </nav>
         </div>
       </div>
     </header>
