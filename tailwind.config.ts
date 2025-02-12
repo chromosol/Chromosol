@@ -46,8 +46,8 @@ const config: Config = {
         '999': '999'
       },
       colors: {
-        primary: "#99E39E",
-        secondary: "#1DC8CD",
+        primary: "#e9ebdd",
+        secondary: "#79C380",
         midnight_text: "#263238",
         muted: "#d8dbdb",
         error: "#CF3127",
@@ -58,10 +58,10 @@ const config: Config = {
         border: "#E1E1E1",
         success: "#3cd278",
         section: "#737373",
-        darkmode: "#000510",
+        darkmode: "#001008",
         darklight: "#0c372a",
         dark_border: "#959595",
-        tealGreen : "#477E70",
+        tealGreen : "#448765",
         charcoalGray: "#666C78",
         deepSlate: "#282C36",
         slateGray: "#2F3543",
@@ -167,6 +167,7 @@ const config: Config = {
       backgroundImage: {
         "start": "url('/images/work/bg-start.png')",
         "perk": "url('/images/perks/perk-bg.png')",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       blur: {
         220: '220px',

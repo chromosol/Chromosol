@@ -27,7 +27,7 @@ export const pricedeta: {
     mark: "",
     width: 44,
     height: 44,
-    padding: "px-1 py-1",
+    padding: "px-0 py-0",
   },
   {
     title: "Python ",
@@ -36,8 +36,8 @@ export const pricedeta: {
     background: "bg-warning bg-opacity-20",
     price: "Advance Logic",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   },
   {
@@ -49,7 +49,7 @@ export const pricedeta: {
     mark: "",
     width: 44,
     height: 44,
-    padding: "px-1 py-1",
+    padding: "px-0 py-0",
   },
   {
     title: "Jenkins",
@@ -58,8 +58,8 @@ export const pricedeta: {
     background: "bg-light_grey",
     price: "CI",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   },
   {
@@ -71,7 +71,7 @@ export const pricedeta: {
     mark: "",
     width: 44,
     height: 44,
-    padding: "px-1 py-1",
+    padding: "px-0 py-0",
   },
   {
     title: "Github",
@@ -80,8 +80,8 @@ export const pricedeta: {
     background: "bg-light_grey",
     price: "Version Control",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   },
   {
@@ -91,8 +91,8 @@ export const pricedeta: {
     background: "bg-light_grey",
     price: "Low code",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   }
 ];
