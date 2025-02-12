@@ -3,18 +3,22 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { pricedeta } from "@/app/api/data";
 import Image from "next/image";
+import { useRef } from "react";
 
 const CardSlider = () => {
+  const sliderRef = useRef(null); // Ref to control the slider
+
   const settings = {
-    autoplay: true,
+    autoplay: true, // Enable autoplay
     dots: false,
     arrows: false,
     infinite: true,
-    autoplaySpeed: 1500,
-    speed: 300,
+    autoplaySpeed: 0, // Set to 0 for continuous movement
+    speed: 8000, // Adjust speed for smooth constant movement
     slidesToShow: 4,
     slidesToScroll: 1,
-    cssEase: "ease-in-out",
+    cssEase: "linear", // Use linear easing for constant speed
+    pauseOnHover: true, // Pause on hover
     responsive: [
       {
         breakpoint: 479,
@@ -36,9 +40,10 @@ const CardSlider = () => {
       },
     ],
   };
+
   return (
     <div className="lg:-mt-16 mt-16">
-      <Slider {...settings}>
+      <Slider ref={sliderRef} {...settings}>
         {pricedeta.map((item, index) => (
           <div key={index} className="pr-6">
             <div className="px-5 py-6 bg-dark_grey bg-opacity-80 rounded-xl">
