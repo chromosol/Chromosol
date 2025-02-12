@@ -3,6 +3,10 @@ name: Deploy to EC2 via Docker Hub
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  pull_request_review:
+    types: [submitted, edited, dismissed]
 
 env:
   IMAGE_NAME: chromosol_app
