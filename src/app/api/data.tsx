@@ -97,6 +97,37 @@ export const pricedeta: {
   }
 ];
 
+export const  services = [
+    {
+      icon: "/images/icons/icon-consulting.svg",
+      text: "Digital Marketing Consulting",
+    },
+    {
+      icon: "/images/icons/icon-blockchain.svg",
+      text: "Website Solutions",
+    },
+    {
+      icon: "/images/icons/icon-Services.svg",
+      text: "UX /UI Design",
+    },
+    {
+      icon: "/images/icons/icon-consulting.svg",
+      text: "Custom Design",
+    },
+    {
+      icon: "/images/icons/icon-blockchain.svg",
+      text: "Custom Development",
+    },
+    {
+      icon: "/images/icons/icon-Services.svg",
+      text: "CI /CD Integration",
+    },
+    {
+      icon: "/images/icons/icon-consulting.svg",
+      text: "Project Deployment",
+    },
+  ];
+
 export const portfolioData: { image: string; title: string }[] = [
   {
     image: "/images/portfolio/icon-wallet.svg",

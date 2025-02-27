@@ -2,8 +2,16 @@ import { HeaderItem } from "@/types/menu";
 
 export const headerData: HeaderItem[] = [
   { label: "Development", href: "/#development" },
-  //{ label: "Work", href: "/#work" },
   { label: "Portfolio", href: "/#portfolio" },
   { label: "Upgrade", href: "/#upgrade" },
-  //{ label: "Docs", href: "/documentation#version" },
+  // Example with submenu if needed
+  /* {
+    label: "Services",
+    href: "/#services",
+    submenu: [
+      { label: "Web Development", href: "/services/web-development" },
+      { label: "Mobile Apps", href: "/services/mobile-apps" },
+      { label: "UI/UX Design", href: "/services/design" }
+    ]
+  }, */
 ];

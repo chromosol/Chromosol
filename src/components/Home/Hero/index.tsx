@@ -3,16 +3,11 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { XIcon } from "@primer/octicons-react";
-import Particles from "react-tsparticles";
-import { Engine } from "tsparticles-engine"; // Import Engine type
-import { loadFull } from "tsparticles"; // Import loadFull
 import CTAForm from "./cta-form";
 import ServiceInquiryForm from "./service-form";
-import CardSlider from "./slider";
 import Link from "next/link";
 
 const Hero = () => {
-  
   const [isBuying, setIsBuyingOpen] = useState(false);
   const [isSelling, setIsSellingOpen] = useState(false);
   const BuyRef = useRef<HTMLDivElement>(null);
@@ -41,206 +36,228 @@ const Hero = () => {
     document.body.style.overflow = isBuying || isSelling ? "hidden" : "";
   }, [isBuying, isSelling]);
 
-
-  // Particles.js initialization
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadFull(engine); // Properly load the full engine
-  }, []);
-
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0a0d12] -z-50" />
-
-      {/* Glow Effect */}
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#0d1117] to-[#161b22] pt-60 md:pt-62" id="Hero">
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="absolute -top-40 -left-40 w-[800px] h-[800px] bg-gradient-radial from-[#1f6feb]/20 via-[#1f6feb]/10 to-transparent blur-3xl"
-        />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="absolute -bottom-40 -right-40 w-[800px] h-[800px] bg-gradient-radial from-[#2ea043]/20 via-[#2ea043]/10 to-transparent blur-3xl"
-        />
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
+        
+        {/* Glowing Orbs */}
+        <div className="absolute top-1/4 -left-40 w-96 h-96 bg-[#238636] opacity-10 rounded-full filter blur-[120px]"></div>
+        <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-[#58a6ff] opacity-10 rounded-full filter blur-[120px]"></div>
+        
+        {/* Animated Dots */}
+        {/* <div className="absolute top-0 left-0 w-full h-full">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#58a6ff] rounded-full opacity-30"
+              initial={{
+                x: Math.random() * 100 + "%",
+                y: Math.random() * 100 + "%",
+              }}
+              animate={{
+                x: [
+                  Math.random() * 100 + "%",
+                  Math.random() * 100 + "%",
+                  Math.random() * 100 + "%",
+                ],
+                y: [
+                  Math.random() * 100 + "%",
+                  Math.random() * 100 + "%",
+                  Math.random() * 100 + "%",
+                ],
+              }}
+              transition={{
+                duration: 20 + Math.random() * 10,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          ))}
+        </div> */}
       </div>
 
-      {/* Particles Background */}
-      <div className="absolute inset-0 -z-40">
-        <Particles
-          id="tsparticles"
-          init={particlesInit}
-          options={{
-            background: {
-              color: {
-                value: "transparent",
-              },
-            },
-            fpsLimit: 120,
-            interactivity: {
-              events: {
-                onHover: {
-                  enable: true,
-                  mode: "repulse",
-                },
-              },
-              modes: {
-                repulse: {
-                  distance: 100,
-                  duration: 0.4,
-                },
-              },
-            },
-            particles: {
-              color: {
-                value: ["#1f6feb", "#2ea043", "#58a6ff"],
-              },
-              links: {
-                color: "#30363d",
-                distance: 150,
-                enable: true,
-                opacity: 0.5,
-                width: 1,
-              },
-              collisions: {
-                enable: true,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: {
-                  default: "bounce",
-                },
-                random: false,
-                speed: 1,
-                straight: false,
-              },
-              number: {
-                density: {
-                  enable: true,
-                  area: 800,
-                },
-                value: 80,
-              },
-              opacity: {
-                value: 0.5,
-              },
-              shape: {
-                type: "circle",
-              },
-              size: {
-                value: { min: 1, max: 3 },
-              },
-            },
-            detectRetina: true,
-          }}
-        />
-      </div>
-
-      {/* Content */}
-      <div className="container mt-10 mx-auto my-32 px-4 max-w-6xl relative z-10">
+      <div className="container relative z-10 mx-auto px-6 lg:max-w-screen-xl">
         <motion.div
-          className="flex flex-col lg:flex-row items-center gap-12"
+          className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-between gap-16"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
           {/* Text Content */}
-          <div className="lg:w-7/12 mt-16 text-center lg:text-left">
+          <div className="lg:w-6/12 text-center lg:text-left">
+            <motion.div
+              className="inline-block mb-3 rounded-full bg-gradient-to-r from-[#0d1117] to-[#161b22] px-4 py-1 border border-[#30363d]"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <span className="bg-gradient-to-r from-[#58a6ff] to-[#2ea043] bg-clip-text text-transparent font-medium">
+                Next-gen Digital Solutions
+              </span>
+            </motion.div>
+
             <motion.h1
-              className="text-4xl md:text-6xl font-bold text-[#e6edf3] mb-6 leading-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#e6edf3] mb-6 leading-tight tracking-tight"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Empowering <br />
+              Empowering{" "}
+              <span className="relative">
+                <span className="bg-gradient-to-r from-[#58a6ff] to-[#2ea043] bg-clip-text text-transparent">
+                  businesses,
+                </span>
+                <motion.span
+                  className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#58a6ff] to-[#2ea043] rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                />
+              </span>{" "}
+              startups and{" "}
               <span className="bg-gradient-to-r from-[#58a6ff] to-[#2ea043] bg-clip-text text-transparent">
-                businesses, startups and creator's
+                creators
               </span>
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl text-[#848d97] mb-8 max-w-2xl mx-auto lg:mx-0"
+              className="text-xl text-[#8b949e] mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              to fuel growth and visibility in the digital space.
+              to fuel growth and visibility in the ever-evolving digital landscape with cutting-edge solutions designed for tomorrow's challenges.
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start mb-12"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
             >
               <button
                 onClick={() => setIsBuyingOpen(true)}
-                className="px-8 py-4 bg-[#238636] hover:bg-[#2ea043] text-[#e6edf3] rounded-xl font-medium transition-all flex items-center gap-3"
+                className="group px-8 py-4 bg-gradient-to-r from-[#238636] to-[#2ea043] text-[#e6edf3] rounded-xl font-medium transition-all flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-[#238636]/20"
               >
                 <span>Start building</span>
-                <span className="text-xl">→</span>
+                <span className="transform group-hover:translate-x-1 transition-transform text-xl">→</span>
               </button>
               <button
                 onClick={() => setIsSellingOpen(true)}
-                className="px-8 py-4 bg-[#161b22] hover:bg-[#21262d] border border-[#30363d] text-[#e6edf3] rounded-xl transition-all"
+                className="px-8 py-4 bg-[#161b22] border border-[#30363d] text-[#e6edf3] rounded-xl transition-all hover:bg-[#21262d] hover:border-[#58a6ff] flex items-center justify-center"
               >
                 Learn more
               </button>
             </motion.div>
-            <div className="flex items-center md:justify-start justify-center gap-12 mt-20 ">
-              <Link href="#" className="hover:scale-110 duration-300">
-                <Image
-                  src="/images/hero/ssh.png"
-                  alt="Play Store"
-                  width={240}
-                  height={70}
-                />
-              </Link>
-              <Link href="#" className="hover:scale-110 duration-300">
-                <Image
-                  src="/images/hero/mst.png"
-                  alt="App Store"
-                  width={240}
-                  height={70}
-                />
-              </Link>
-            </div>
-
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row items-center gap-6 md:gap-12 mt-4 mb-16 lg:mb-0"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <p className="text-[#8b949e] text-sm">Trusted by industry leaders:</p>
+              <div className="flex items-center flex-wrap justify-center lg:justify-start gap-10">
+                <Link href="#" className="opacity-70 hover:opacity-100 transition-opacity duration-300">
+                  <Image
+                    src="/images/hero/ssh.png"
+                    alt="Partner logo"
+                    width={140}
+                    height={40}
+                    className="h-8 w-auto object-contain"
+                  />
+                </Link>
+                <Link href="#" className="opacity-70 hover:opacity-100 transition-opacity duration-300">
+                  <Image
+                    src="/images/hero/mst.png"
+                    alt="Partner logo"
+                    width={140}
+                    height={40}
+                    className="h-8 w-auto object-contain"
+                  />
+                </Link>
+              </div>
+            </motion.div>
           </div>
-          
+
           {/* Image Preview */}
           <motion.div
-            className="lg:w-5/12 lg:-ml-14 relative w-full max-w-2xl"
+            className="lg:w-6/12 relative w-full"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="relative rounded-2xl overflow-hidden border border-[#30363d] bg-[#161b2242] shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1f6feb]/10 to-[#2ea043]/10" />
-              <Image 
+            <div className="relative rounded-2xl overflow-hidden border border-[#30363d] bg-[#0d1117] shadow-2xl">
+              {/* Code-like elements in the background */}
+              <div className="absolute inset-0 overflow-hidden opacity-20">
+                <pre className="text-[#58a6ff] text-xs p-4">
+                  {`function initPlatform() {
+  const config = {
+    mode: "production",
+    features: ["analytics", "automation", "scaling"],
+    performance: "optimized"
+  };
+  
+  return new Platform(config).launch();
+}`}
+                </pre>
+              </div>
+              
+              <div className="absolute top-0 left-0 right-0 h-10 bg-[#161b22] border-b border-[#30363d] flex items-center px-4 gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                <div className="ml-2 text-[#8b949e] text-xs font-mono">platform-dashboard.tsx</div>
+              </div>
+              
+              {/* Glow effect behind the image */}
+              <div className="absolute inset-8 bg-gradient-to-br from-[#1f6feb]/20 to-[#2ea043]/20 filter blur-xl rounded-lg"></div>
+              
+              <Image
                 src="/images/hero/banner-image.png"
-                alt="GitHub platform preview"
+                alt="Platform preview"
                 width={1200}
                 height={800}
-                className="relative z-10"
+                className="relative z-10 pt-10"
               />
+              
+              {/* Interactive elements overlaid on image */}
+              <motion.div 
+                className="absolute bottom-5 right-5 bg-[#238636] bg-opacity-90 backdrop-blur-sm px-3 py-1 rounded-md text-white text-sm font-medium"
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 1, duration: 0.4 }}
+              >
+                Live Demo
+              </motion.div>
             </div>
+            
+            {/* Floating badge */}
+            <motion.div 
+              className="absolute -top-5 -right-5 bg-[#0d1117] border border-[#30363d] rounded-xl p-3 shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#238636] flex items-center justify-center text-white">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[#e6edf3] font-medium">99.9% Uptime</p>
+                  <p className="text-[#8b949e] text-xs">Enterprise-grade reliability</p>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
-      <div className="container mx-auto lg:max-w-screen-xl px-4">
-      <motion.div 
-          initial= {{ opacity: 0}}
-          animate= { {opacity: 1}}
-          //transition: { duration: 0.8 }
-           transition={{ delay: 0.4 }}>
-          <CardSlider />
-        </motion.div>
-        </div>
+
       {/*Buying Modal */}
       <AnimatePresence>
         {isBuying && (
@@ -248,10 +265,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#010409]/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-[#010409]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           >
             <motion.div
-              className="bg-[#161b22] rounded-xl border border-[#30363d] shadow-2xl max-w-md w-full p-8 relative"
+              className="bg-[#0d1117] rounded-xl border border-[#30363d] shadow-2xl max-w-md w-full p-8 relative"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -259,7 +276,7 @@ const Hero = () => {
             >
               <button
                 onClick={() => setIsBuyingOpen(false)}
-                className="absolute top-5 right-5 text-[#848d97] hover:text-[#58a6ff] transition-colors"
+                className="absolute top-5 right-5 text-[#8b949e] hover:text-[#58a6ff] transition-colors"
               >
                 <XIcon size={24} />
               </button>
@@ -268,7 +285,7 @@ const Hero = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    
+
       {/* Selling Modal */}
       <AnimatePresence>
         {isSelling && (
@@ -276,10 +293,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#010409]/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-[#010409]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           >
             <motion.div
-              className="bg-[#161b22] rounded-xl border border-[#30363d] shadow-2xl max-w-md w-full p-8 relative"
+              className="bg-[#0d1117] rounded-xl border border-[#30363d] shadow-2xl max-w-md w-full p-8 relative"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -287,7 +304,7 @@ const Hero = () => {
             >
               <button
                 onClick={() => setIsSellingOpen(false)}
-                className="absolute top-5 right-5 text-[#848d97] hover:text-[#58a6ff] transition-colors"
+                className="absolute top-5 right-5 text-[#8b949e] hover:text-[#58a6ff] transition-colors"
               >
                 <XIcon size={24} />
               </button>

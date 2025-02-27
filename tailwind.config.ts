@@ -46,7 +46,18 @@ const config: Config = {
         '999': '999'
       },
       colors: {
-        primary: "#e9ebdd",
+        primary: {
+          light: '#58a6ff',
+          dark: '#1f6feb',
+        },
+        background: {
+          light: '#ffffff',
+          dark: '#0d1117',
+        },
+        text: {
+          light: '#24292f',
+          dark: '#e6edf3',
+        },
         secondary: "#79C380",
         midnight_text: "#263238",
         muted: "#d8dbdb",
@@ -59,6 +70,7 @@ const config: Config = {
         success: "#3cd278",
         section: "#737373",
         darkmode: "#001008",
+        dark: "#0d1117",
         darklight: "#0c372a",
         dark_border: "#959595",
         tealGreen : "#448765",
@@ -175,6 +187,9 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
 };
 export default config;
