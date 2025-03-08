@@ -17,7 +17,7 @@ const Work = () => {
     <section 
       id="work" 
       ref={sectionRef} 
-      className="relative py-20 md:py-32 bg-gradient-to-b from-[#161b22] to-[#141a22] overflow-hidden"
+      className="relative py-20 md:py-32 bg-gradient-to-b bg-background-light dark:bg-background-dark overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 w-full h-full">
@@ -44,7 +44,7 @@ const Work = () => {
                 Collaborate with our team
               </motion.span>
               
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#e6edf3] leading-tight mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#e6edf3] leading-tight mb-6">
                 Transform your vision into
                 <motion.span 
                   className="block mt-2 bg-gradient-to-r from-[#58a6ff] via-[#38a3f8] to-[#2ea043] bg-clip-text text-transparent"
@@ -66,17 +66,17 @@ const Work = () => {
               </motion.p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid md:grid-cols-2 gap-3">
               {services.map((service, index) => (
                 <motion.div
                   key={index}
-                  className="group flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#161b22] to-[#0d1117] backdrop-blur-sm border border-[#30363d] hover:border-[#58a6ff]/40 transition-all duration-300 shadow-lg hover:shadow-[#58a6ff]/5"
+                  className="group flex items-center gap-4 p-2 rounded-2xl bg-gradient-to-br from-[#161b22] to-[#0d1117] backdrop-blur-sm border border-[#30363d] hover:border-[#58a6ff]/40 transition-all duration-300 shadow-lg hover:shadow-[#58a6ff]/5"
                   initial={{ y: 30, opacity: 0 }}
                   animate={isInView ? { y: 0, opacity: 1 } : {}}
-                  transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
+                  transition={{ delay: 0.1 + index * 0.1, duration: 0.5 }}
                   whileHover={{ y: -5 }}
                 >
-                  <div className="flex-shrink-0 p-3 rounded-xl bg-gradient-to-br from-[#0d1117] to-[#161b22] shadow-inner border border-[#30363d] group-hover:border-[#58a6ff]/30 transition-colors">
+                  <div className="flex-shrink-0 p-2 rounded-xl bg-gradient-to-br from-[#0d1117] to-[#161b22] shadow-inner border border-[#30363d] group-hover:border-[#58a6ff]/30 transition-colors">
                     <Image
                       src={service.icon}
                       alt={service.text}
@@ -86,7 +86,7 @@ const Work = () => {
                     />
                   </div>
                   <div>
-                    <span className="block text-[#e6edf3] font-medium text-lg group-hover:text-[#58a6ff] transition-colors">{service.text}</span>
+                    <span className="block text-[#e6edf3] font-medium text-base group-hover:text-[#58a6ff] transition-colors">{service.text}</span>
                     {/* <span className="text-sm text-[#848d97] opacity-0 group-hover:opacity-100 transition-opacity">{service.description || 'Learn more →'}</span> */}
                   </div>
                 </motion.div>

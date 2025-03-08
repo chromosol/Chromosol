@@ -14,7 +14,7 @@ const Logo: React.FC = () => {
         quality={100}
         priority
       />
-      <span className="text-2xl font-bold text-gray-100 dark:text-gray-100 transition-colors duration-300">
+      <span className="text-2xl font-bold text-txt-light dark:text-txt-dark transition-colors duration-300">
         Chromosol.
       </span>
     </Link>

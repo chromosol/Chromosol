@@ -81,12 +81,12 @@ const Header: React.FC = () => {
   const headerBackground = () => {
     if (!isTransparent) {
       // Non-homepage always has a background
-      return "bg-dark dark:bg-dark";
+      return "bg-background-light dark:bg-background-dark";
     }
     
     if (isScrolled) {
       // Scrolled state on homepage
-      return "bg-dark/65 dark:bg-dark/65 backdrop-blur-md";
+      return "bg-background-light/65 dark:bg-background-dark/65 backdrop-blur-md";
     }
     
     // Initial state on homepage (transparent)
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
             <div className="hidden lg:flex items-center gap-3">
               <Link
                 href="#"
-                className="px-5 py-2 text-secondary border border-primary rounded-lg transition-all hover:bg-primary/10 focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-transparent"
+                className="px-5 py-2 text-txt-light dark:text-txt-dark border border-primary rounded-lg transition-all hover:bg-primary/10 focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-transparent"
                 onClick={(e) => {
                   e.preventDefault();
                   setIsSignInOpen(true);
@@ -137,7 +137,7 @@ const Header: React.FC = () => {
               </Link>
               <Link
                 href="#"
-                className="px-5 py-2 bg-primary text-white border border-primary rounded-lg transition-all hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-transparent"
+                className="px-5 py-2 bg-background-light dark:bg-background-dark text-txt-light dark:text-txt-dark border border-primary rounded-lg transition-all hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-transparent"
                 onClick={(e) => {
                   e.preventDefault();
                   setIsSignUpOpen(true);

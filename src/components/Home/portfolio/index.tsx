@@ -20,7 +20,7 @@ const Portfolio = () => {
   };
 
   return (
-    <section className="bg-[#0d1117] pt-12 md:pt-24" id="portfolio" ref={ref}>
+    <section className="bg-background-light dark:bg-background-dark pt-12 md:pt-24" id="portfolio" ref={ref}>
       <div className="container mx-auto lg:max-w-screen-xl px-4 sm:px-6">
         <div className="grid lg:grid-cols-12 gap-8">
           {/* Left sidebar - similar to GitHub interface */}

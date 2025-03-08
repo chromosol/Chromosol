@@ -47,23 +47,31 @@ const config: Config = {
       },
       colors: {
         primary: {
-          light: '#58a6ff',
-          dark: '#1f6feb',
+          light: '#fefefe',
+          dark: '#333a2f',
+        },
+        secondary: {
+          light: '#e9ebdd',
+          dark: '#263238',
         },
         background: {
-          light: '#ffffff',
+          light: '#e9ebdd',
           dark: '#0d1117',
         },
-        text: {
-          light: '#24292f',
-          dark: '#e6edf3',
+        txt: {
+          light: '#0d1117',
+          dark: '#e9ebdd',
         },
-        secondary: "#79C380",
+        gray: {
+          light: '#bfbfbf',
+          dark: '#111827',
+        },
+        
         midnight_text: "#263238",
         muted: "#d8dbdb",
         error: "#CF3127",
         warning: "#F7931A",
-        light_grey: "#505050",
+        light_grey: "#bfbfbf",
         grey: "#F5F7FA",
         dark_grey: "#1E2229",
         border: "#E1E1E1",
@@ -74,6 +82,8 @@ const config: Config = {
         darklight: "#0c372a",
         dark_border: "#959595",
         tealGreen : "#448765",
+        purple : "#6c2986",
+        blue : "#0777bd",
         charcoalGray: "#666C78",
         deepSlate: "#282C36",
         slateGray: "#2F3543",

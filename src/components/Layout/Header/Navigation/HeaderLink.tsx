@@ -24,7 +24,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem; onLinkClick?: () => void }>
   return (
     <div className="relative w-full ">
       <div 
-        className="flex items-center justify-between w-full py-3.5"
+        className="flex items-center justify-between w-full py-1"
         onClick={handleToggle}
       >
         <Link
@@ -32,7 +32,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem; onLinkClick?: () => void }>
           className={`text-base font-medium transition-colors ${
             isActive 
               ? "text-primary" 
-              : "text-white/80 dark:text-white/80 hover:text-primary"
+              : "text-dark/80 dark:text-white/80 hover:text-primary"
           }`}
           onClick={(e) => item.submenu && e.preventDefault()}
         >
@@ -78,7 +78,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem; onLinkClick?: () => void }>
               className={`block py-2.5 text-sm transition-colors ${
                 path === subItem.href
                   ? "text-primary"
-                  : "text-white/70 dark:text-white/70 hover:text-primary"
+                  : "text-dark/70 dark:text-white/70 hover:text-primary"
               }`}
               onClick={onLinkClick}
             >

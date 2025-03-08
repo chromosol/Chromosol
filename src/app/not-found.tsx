@@ -9,9 +9,7 @@ export const metadata: Metadata = {
 const ErrorPage = () => {
   return (
     <>
-      <HeroSub
-        title="404"
-      />
+      <HeroSub title="Page Not Found" />
       <NotFound />
     </>
   );

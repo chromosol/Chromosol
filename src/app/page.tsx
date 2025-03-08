@@ -7,6 +7,7 @@ import Portfolio from "@/components/Home/portfolio";
 import Upgrade from "@/components/Home/upgrade";
 import Perks from "@/components/Home/perks";
 import { Metadata } from "next";
+import CardSlider from "@/components/Home/Hero/slider";
 export const metadata: Metadata = {
   title: "Chromosol",
 };
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <CardSlider/>
       <Work />
       <TimeLine />
       <Platform />
