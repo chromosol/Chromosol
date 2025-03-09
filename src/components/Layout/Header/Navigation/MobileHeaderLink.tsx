@@ -1,47 +1,86 @@
 import { useState } from "react";
 import Link from "next/link";
-import { HeaderItem } from "../../../../types/menu";
+import { usePathname } from "next/navigation";
+import { HeaderItem } from "@/types/menu";
 
-const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
+const MobileHeaderLink: React.FC<{ item: HeaderItem; onLinkClick?: () => void }> = ({ 
+  item, 
+  onLinkClick 
+}) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
+  const path = usePathname();
 
-  const handleToggle = () => {
-    setSubmenuOpen(!submenuOpen);
+  const handleToggle = (e: React.MouseEvent) => {
+    if (item.submenu) {
+      e.preventDefault();
+      setSubmenuOpen(!submenuOpen);
+    } else if (onLinkClick) {
+      onLinkClick();
+    }
   };
 
+  const isActive = path === item.href;
+
   return (
-    <div className="relative w-full">
-      <Link
-        href={item.href}
-        onClick={item.submenu ? handleToggle : undefined}
-        className="flex items-center justify-between w-full py-2 text-muted focus:outline-none"
+    <div className="relative w-full border-b border-gray-700/50 last:border-b-0">
+      <div 
+        className="flex items-center justify-between w-full py-3.5"
+        onClick={handleToggle}
       >
-        {item.label}
+        <Link
+          href={item.href}
+          className={`text-base font-medium transition-colors ${
+            isActive 
+              ? "text-primary" 
+              : "text-white/80 dark:text-white/80 hover:text-primary"
+          }`}
+          onClick={(e) => item.submenu && e.preventDefault()}
+        >
+          {item.label}
+        </Link>
+        
         {item.submenu && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.5em"
-            height="1.5em"
-            viewBox="0 0 24 24"
+          <button 
+            aria-label={submenuOpen ? "Collapse submenu" : "Expand submenu"}
+            className="p-1 rounded-md hover:bg-gray-700/50 transition-colors"
           >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              d="m7 10l5 5l5-5"
-            />
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              className="transition-transform duration-300 text-white/80"
+              style={{ transform: submenuOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m7 10l5 5l5-5"
+              />
+            </svg>
+          </button>
         )}
-      </Link>
+      </div>
+
+      {/* Submenu */}
       {submenuOpen && item.submenu && (
-        <div className="bg-white p-2 w-full">
+        <div 
+          className="pl-4 border-l border-gray-700/50 mb-2 overflow-hidden"
+          style={{ animation: 'slideDown 0.2s ease-out forwards' }}
+        >
           {item.submenu.map((subItem, index) => (
             <Link
               key={index}
               href={subItem.href}
-              className="block py-2 text-gray-500 hover:bg-gray-200"
+              className={`block py-2.5 text-sm transition-colors ${
+                path === subItem.href
+                  ? "text-primary"
+                  : "text-white/70 dark:text-white/70 hover:text-primary"
+              }`}
+              onClick={onLinkClick}
             >
               {subItem.label}
             </Link>

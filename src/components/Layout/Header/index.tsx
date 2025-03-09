@@ -1,66 +1,74 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { headerData } from "../Header/Navigation/menuData";
+import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { Icon } from "@iconify/react/dist/iconify.js";
+
+// Components
 import Logo from "./Logo";
-import Image from "next/image";
 import HeaderLink from "../Header/Navigation/HeaderLink";
 import MobileHeaderLink from "../Header/Navigation/MobileHeaderLink";
+import ThemeToggler from "./ThemeToggler";
 import Signin from "@/components/Auth/SignIn";
 import SignUp from "@/components/Auth/SignUp";
-import { useTheme } from "next-themes";
-import { Icon } from "@iconify/react/dist/iconify.js";
+
+// Data
+import { headerData } from "../Header/Navigation/menuData";
 
 const Header: React.FC = () => {
   const pathUrl = usePathname();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
+  // State management
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [sticky, setSticky] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isTransparent, setIsTransparent] = useState(true);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
+  // Refs for outside clicks
   const navbarRef = useRef<HTMLDivElement>(null);
   const signInRef = useRef<HTMLDivElement>(null);
   const signUpRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
+  // Check if we're on the homepage to determine transparency
+  useEffect(() => {
+    setIsTransparent(pathUrl === "/");
+  }, [pathUrl]);
+
+  // Handle scroll events
   const handleScroll = () => {
-    setSticky(window.scrollY >= 80);
+    setIsScrolled(window.scrollY > 50);
   };
 
+  // Handle clicks outside modals and menus
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      signInRef.current &&
-      !signInRef.current.contains(event.target as Node)
-    ) {
+    if (signInRef.current && !signInRef.current.contains(event.target as Node)) {
       setIsSignInOpen(false);
     }
-    if (
-      signUpRef.current &&
-      !signUpRef.current.contains(event.target as Node)
-    ) {
+    if (signUpRef.current && !signUpRef.current.contains(event.target as Node)) {
       setIsSignUpOpen(false);
     }
-    if (
-      mobileMenuRef.current &&
-      !mobileMenuRef.current.contains(event.target as Node) &&
-      navbarOpen
-    ) {
+    if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node) && navbarOpen) {
       setNavbarOpen(false);
     }
   };
 
+  // Set up event listeners
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
+    
+    // Clean up
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [navbarOpen, isSignInOpen, isSignUpOpen]);
 
+  // Prevent body scroll when modals are open
   useEffect(() => {
     if (isSignInOpen || isSignUpOpen || navbarOpen) {
       document.body.style.overflow = "hidden";
@@ -69,165 +77,216 @@ const Header: React.FC = () => {
     }
   }, [isSignInOpen, isSignUpOpen, navbarOpen]);
 
+  // Determine header background styles based on scroll and page
+  const headerBackground = () => {
+    if (!isTransparent) {
+      // Non-homepage always has a background
+      return "bg-background-light dark:bg-background-dark";
+    }
+    
+    if (isScrolled) {
+      // Scrolled state on homepage
+      return "bg-background-light/65 dark:bg-background-dark/65 backdrop-blur-md";
+    }
+    
+    // Initial state on homepage (transparent)
+    return "bg-transparent";
+  };
+
+  // Handle closing the mobile menu when a link is clicked
+  const handleMobileLinkClick = () => {
+    setNavbarOpen(false);
+  };
+
   return (
     <header
-      className={`fixed top-0 z-40 w-full pb-5 transition-all duration-300 ${
-        sticky ? " shadow-lg bg-darkmode pt-5" : "shadow-none md:pt-14 pt-5"
-      }`}
+      className={`fixed top-0 z-40 w-full transition-all duration-300 ${
+        isScrolled 
+          ? "shadow-lg py-4" 
+          : "shadow-none md:pt-8 py-6"
+      } ${headerBackground()}`}
     >
-      <div className="lg:py-0 py-2">
-        <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md flex items-center justify-between px-4">
+      <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md">
+        <div className="flex items-center justify-between px-4">
+          {/* Logo */}
           <Logo />
-          <nav className="hidden lg:flex flex-grow items-center gap-8 justify-center">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8 justify-center">
             {headerData.map((item, index) => (
               <HeaderLink key={index} item={item} />
             ))}
           </nav>
-          <div className="flex items-center gap-4">
-            {/* <button
-              aria-label="Toggle theme"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="flex h-8 w-8 items-center justify-center text-body-color duration-300 dark:text-white"
-            >
-              <svg
-                viewBox="0 0 16 16"
-                className={`hidden h-6 w-6 dark:block ${
-                  !sticky && pathUrl === "/" && "text-white"
-                }`}
-              >
-                <path
-                  d="M4.50663 3.2267L3.30663 2.03337L2.36663 2.97337L3.55996 4.1667L4.50663 3.2267ZM2.66663 7.00003H0.666626V8.33337H2.66663V7.00003ZM8.66663 0.366699H7.33329V2.33337H8.66663V0.366699V0.366699ZM13.6333 2.97337L12.6933 2.03337L11.5 3.2267L12.44 4.1667L13.6333 2.97337ZM11.4933 12.1067L12.6866 13.3067L13.6266 12.3667L12.4266 11.1734L11.4933 12.1067ZM13.3333 7.00003V8.33337H15.3333V7.00003H13.3333ZM7.99996 3.6667C5.79329 3.6667 3.99996 5.46003 3.99996 7.6667C3.99996 9.87337 5.79329 11.6667 7.99996 11.6667C10.2066 11.6667 12 9.87337 12 7.6667C12 5.46003 10.2066 3.6667 7.99996 3.6667ZM7.33329 14.9667H8.66663V13H7.33329V14.9667ZM2.36663 12.36L3.30663 13.3L4.49996 12.1L3.55996 11.16L2.36663 12.36Z"
-                  fill="#FFFFFF"
-                />
-              </svg>
-              <svg
-                viewBox="0 0 23 23"
-                className={`h-8 w-8 text-dark dark:hidden ${
-                  !sticky && pathUrl === "/" && "text-white"
-                }`}
-              >
-                <path d="M16.6111 15.855C17.591 15.1394 18.3151 14.1979 18.7723 13.1623C16.4824 13.4065 14.1342 12.4631 12.6795 10.4711C11.2248 8.47905 11.0409 5.95516 11.9705 3.84818C10.8449 3.9685 9.72768 4.37162 8.74781 5.08719C5.7759 7.25747 5.12529 11.4308 7.29558 14.4028C9.46586 17.3747 13.6392 18.0253 16.6111 15.855Z" />
-              </svg>
-            </button> */}
-            <Link
-              href="#"
-              className="hidden lg:block bg-transparent text-primary border hover:bg-primary border-primary hover:text-darkmode px-4 py-2 rounded-lg"
-              onClick={() => {
-                setIsSignInOpen(true);
-              }}
-            >
-              Sign In
-            </Link>
-            {isSignInOpen && (
-              <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div
-                  ref={signInRef}
-                  className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg px-8 pt-14 pb-8 text-center bg-dark_grey bg-opacity-90 backdrop-blur-md"
-                >
-                  <button
-                    onClick={() => setIsSignInOpen(false)}
-                    className="absolute top-0 right-0 mr-8 mt-8 dark:invert"
-                    aria-label="Close Sign In Modal"
-                  >
-                    <Icon
-                      icon="tabler:currency-xrp"
-                      className="text-white hover:text-primary text-24 inline-block me-2"
-                    />
-                  </button>
-                  <Signin />
-                </div>
-              </div>
-            )}
-            <Link
-              href="#"
-              className="hidden lg:block bg-primary text-darkmode hover:bg-transparent hover:text-primary border border-primary px-4 py-2 rounded-lg"
-              onClick={() => {
-                setIsSignUpOpen(true);
-              }}
-            >
-              Sign Up
-            </Link>
-            {isSignUpOpen && (
-              <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div
-                  ref={signUpRef}
-                  className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg bg-dark_grey bg-opacity-90 backdrop-blur-md px-8 pt-14 pb-8 text-center"
-                >
-                  <button
-                    onClick={() => setIsSignUpOpen(false)}
-                    className="absolute top-0 right-0 mr-8 mt-8 dark:invert"
-                    aria-label="Close Sign Up Modal"
-                  >
-                    <Icon
-                      icon="tabler:currency-xrp"
-                      className="text-white hover:text-primary text-24 inline-block me-2"
-                    />
-                  </button>
-                  <SignUp />
-                </div>
-              </div>
-            )}
-            <button
-              onClick={() => setNavbarOpen(!navbarOpen)}
-              className="block lg:hidden p-2 rounded-lg"
-              aria-label="Toggle mobile menu"
-            >
-              <span className="block w-6 h-0.5 bg-white"></span>
-              <span className="block w-6 h-0.5 bg-white mt-1.5"></span>
-              <span className="block w-6 h-0.5 bg-white mt-1.5"></span>
-            </button>
-          </div>
-        </div>
-        {navbarOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40" />
-        )}
-        <div
-          ref={mobileMenuRef}
-          className={`lg:hidden fixed top-0 right-0 h-full w-full bg-darkmode shadow-lg transform transition-transform duration-300 max-w-xs ${
-            navbarOpen ? "translate-x-0" : "translate-x-full"
-          } z-50`}
-        >
-          <div className="flex items-center justify-between p-4">
-            <h2 className="text-lg font-bold text-midnight_text dark:text-midnight_text">
-              <Logo />
-            </h2>
 
-            {/*  */}
-            <button
-              onClick={() => setNavbarOpen(false)}
-              className="bg-[url('/images/closed.svg')] bg-no-repeat bg-contain w-5 h-5 absolute top-0 right-0 mr-8 mt-8 dark:invert"
-              aria-label="Close menu Modal"
-            ></button>
-          </div>
-          <nav className="flex flex-col items-start p-4">
-            {headerData.map((item, index) => (
-              <MobileHeaderLink key={index} item={item} />
-            ))}
-            <div className="mt-4 flex flex-col space-y-4 w-full">
+          {/* Right side actions */}
+          <div className="flex items-center gap-4">
+            {/* Theme Toggler */}
+            <ThemeToggler />
+
+            {/* Authentication */}
+            <div className="hidden lg:flex items-center gap-3">
               <Link
                 href="#"
-                className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white"
-                onClick={() => {
+                className="px-5 py-2 text-txt-light dark:text-txt-dark border border-primary rounded-lg transition-all hover:bg-primary/10 focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-transparent"
+                onClick={(e) => {
+                  e.preventDefault();
                   setIsSignInOpen(true);
-                  setNavbarOpen(false);
                 }}
               >
                 Sign In
               </Link>
               <Link
                 href="#"
-                className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                onClick={() => {
+                className="px-5 py-2 bg-background-light dark:bg-background-dark text-txt-light dark:text-txt-dark border border-primary rounded-lg transition-all hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-transparent"
+                onClick={(e) => {
+                  e.preventDefault();
                   setIsSignUpOpen(true);
-                  setNavbarOpen(false);
                 }}
               >
                 Sign Up
               </Link>
             </div>
-          </nav>
+
+            {/* Mobile menu toggle */}
+            <button
+              onClick={() => setNavbarOpen(!navbarOpen)}
+              className="lg:hidden p-2 rounded-lg transition-colors hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent"
+              aria-label={navbarOpen ? "Close mobile menu" : "Open mobile menu"}
+            >
+              <div className="w-6 flex flex-col gap-1.5 items-center">
+                <span className={`block w-6 h-0.5 bg-white transition-transform ${navbarOpen ? 'translate-y-2 rotate-45' : ''}`}></span>
+                <span className={`block w-6 h-0.5 bg-white transition-opacity ${navbarOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+                <span className={`block w-6 h-0.5 bg-white transition-transform ${navbarOpen ? '-translate-y-2 -rotate-45' : ''}`}></span>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Modals backdrop */}
+      {(isSignInOpen || isSignUpOpen || navbarOpen) && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-40" />
+      )}
+
+      {/* Mobile Navigation Panel */}
+      <div
+        ref={mobileMenuRef}
+        className={`lg:hidden fixed top-0 right-0 h-full w-full md:w-96 bg-darkmode dark:bg-darkmode shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+          navbarOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex justify-between items-center p-6 border-b border-gray-700/50">
+          <Logo />
+          <button
+            onClick={() => setNavbarOpen(false)}
+            className="p-2 rounded-full hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+            aria-label="Close mobile menu"
+          >
+            <Icon icon="tabler:x" className="text-white text-2xl" />
+          </button>
+        </div>
+        
+        <div className="p-6 overflow-y-auto max-h-[calc(100vh-100px)]">
+          <nav className="flex flex-col">
+            {headerData.map((item, index) => (
+              <MobileHeaderLink 
+                key={index} 
+                item={item} 
+                onLinkClick={handleMobileLinkClick}
+              />
+            ))}
+          </nav>
+          
+          <div className="mt-8 space-y-3">
+            <button
+              className="w-full px-5 py-2.5 text-secondary border border-primary rounded-lg transition-all hover:bg-primary/10 focus:ring-2 focus:ring-primary focus:outline-none"
+              onClick={() => {
+                setIsSignInOpen(true);
+                setNavbarOpen(false);
+              }}
+            >
+              Sign In
+            </button>
+            <button
+              className="w-full px-5 py-2.5 bg-primary text-white border border-primary rounded-lg transition-all hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:outline-none"
+              onClick={() => {
+                setIsSignUpOpen(true);
+                setNavbarOpen(false);
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
+          
+          <div className="mt-8 flex justify-center">
+            <ThemeToggler />
+          </div>
+        </div>
+      </div>
+
+      {/* Sign In Modal */}
+      {isSignInOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div
+            ref={signInRef}
+            className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg px-8 pt-16 pb-10 bg-dark_grey dark:bg-dark_grey bg-opacity-90 dark:bg-opacity-90 backdrop-blur-md"
+            style={{ animation: 'fadeIn 0.3s ease-out' }}
+          >
+            <button
+              onClick={() => setIsSignInOpen(false)}
+              className="absolute top-6 right-6 p-1 rounded-full hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Close Sign In Modal"
+            >
+              <Icon
+                icon="tabler:x"
+                className="text-white hover:text-primary text-xl"
+              />
+            </button>
+            <Signin />
+          </div>
+        </div>
+      )}
+
+      {/* Sign Up Modal */}
+      {isSignUpOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div
+            ref={signUpRef}
+            className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg bg-dark_grey dark:bg-dark_grey bg-opacity-90 dark:bg-opacity-90 backdrop-blur-md px-8 pt-16 pb-10"
+            style={{ animation: 'fadeIn 0.3s ease-out' }}
+          >
+            <button
+              onClick={() => setIsSignUpOpen(false)}
+              className="absolute top-6 right-6 p-1 rounded-full hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Close Sign Up Modal"
+            >
+              <Icon
+                icon="tabler:x"
+                className="text-white hover:text-primary text-xl"
+              />
+            </button>
+            <SignUp />
+          </div>
+        </div>
+      )}
+
+      {/* Global styles for animations - will be placed in your global CSS */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideDown {
+          from { max-height: 0; opacity: 0; }
+          to { max-height: 500px; opacity: 1; }
+        }
+      `}</style>
     </header>
   );
 };

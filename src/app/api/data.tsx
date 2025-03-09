@@ -3,11 +3,10 @@ import { title } from "process";
 export const footerlabels: { label: string; herf: string }[] = [
   { label: "Terms", herf: "#" },
   { label: "Disclosures", herf: "#" },
-  { label: "Disclosures", herf: "#" },
   { label: "Latest News", herf: "#" },
 ];
 
-export const pricedeta: {
+export const pricedata: {
   title: string;
   short: string;
   icon: string;
@@ -27,7 +26,7 @@ export const pricedeta: {
     mark: "",
     width: 44,
     height: 44,
-    padding: "px-1 py-1",
+    padding: "px-0 py-0",
   },
   {
     title: "Python ",
@@ -36,8 +35,8 @@ export const pricedeta: {
     background: "bg-warning bg-opacity-20",
     price: "Advance Logic",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   },
   {
@@ -49,7 +48,7 @@ export const pricedeta: {
     mark: "",
     width: 44,
     height: 44,
-    padding: "px-1 py-1",
+    padding: "px-0 py-0",
   },
   {
     title: "Jenkins",
@@ -58,8 +57,8 @@ export const pricedeta: {
     background: "bg-light_grey",
     price: "CI",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   },
   {
@@ -71,7 +70,7 @@ export const pricedeta: {
     mark: "",
     width: 44,
     height: 44,
-    padding: "px-1 py-1",
+    padding: "px-0 py-0",
   },
   {
     title: "Github",
@@ -80,8 +79,8 @@ export const pricedeta: {
     background: "bg-light_grey",
     price: "Version Control",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   },
   {
@@ -91,11 +90,42 @@ export const pricedeta: {
     background: "bg-light_grey",
     price: "Low code",
     mark: "",
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
     padding: "px-0 py-0",
   }
 ];
+
+export const  services = [
+    {
+      icon: "/images/icons/icon-consulting.svg",
+      text: "Digital Marketing Consulting",
+    },
+    {
+      icon: "/images/icons/icon-blockchain.svg",
+      text: "Website Solutions",
+    },
+    {
+      icon: "/images/icons/icon-Services.svg",
+      text: "UX /UI Design",
+    },
+    {
+      icon: "/images/icons/icon-consulting.svg",
+      text: "Custom Design",
+    },
+    {
+      icon: "/images/icons/icon-blockchain.svg",
+      text: "Custom Development",
+    },
+    {
+      icon: "/images/icons/icon-Services.svg",
+      text: "CI /CD Integration",
+    },
+    {
+      icon: "/images/icons/icon-consulting.svg",
+      text: "Project Deployment",
+    },
+  ];
 
 export const portfolioData: { image: string; title: string }[] = [
   {

@@ -46,22 +46,44 @@ const config: Config = {
         '999': '999'
       },
       colors: {
-        primary: "#99E39E",
-        secondary: "#1DC8CD",
+        primary: {
+          light: '#fefefe',
+          dark: '#333a2f',
+        },
+        secondary: {
+          light: '#e9ebdd',
+          dark: '#263238',
+        },
+        background: {
+          light: '#e9ebdd',
+          dark: '#0d1117',
+        },
+        txt: {
+          light: '#0d1117',
+          dark: '#e9ebdd',
+        },
+        gray: {
+          light: '#bfbfbf',
+          dark: '#111827',
+        },
+        
         midnight_text: "#263238",
         muted: "#d8dbdb",
         error: "#CF3127",
         warning: "#F7931A",
-        light_grey: "#505050",
+        light_grey: "#bfbfbf",
         grey: "#F5F7FA",
         dark_grey: "#1E2229",
         border: "#E1E1E1",
         success: "#3cd278",
         section: "#737373",
-        darkmode: "#000510",
+        darkmode: "#001008",
+        dark: "#0d1117",
         darklight: "#0c372a",
         dark_border: "#959595",
-        tealGreen : "#477E70",
+        tealGreen : "#448765",
+        purple : "#6c2986",
+        blue : "#0777bd",
         charcoalGray: "#666C78",
         deepSlate: "#282C36",
         slateGray: "#2F3543",
@@ -167,6 +189,7 @@ const config: Config = {
       backgroundImage: {
         "start": "url('/images/work/bg-start.png')",
         "perk": "url('/images/perks/perk-bg.png')",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       blur: {
         220: '220px',
@@ -174,6 +197,9 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
 };
 export default config;

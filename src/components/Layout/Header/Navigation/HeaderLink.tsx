@@ -1,67 +1,86 @@
-"use client";
 import { useState } from "react";
 import Link from "next/link";
-import { HeaderItem } from "../../../../types/menu";
 import { usePathname } from "next/navigation";
+import { HeaderItem } from "@/types/menu";
 
-const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
+const MobileHeaderLink: React.FC<{ item: HeaderItem; onLinkClick?: () => void }> = ({ 
+  item, 
+  onLinkClick 
+}) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const path = usePathname();
-  const handleMouseEnter = () => {
+
+  const handleToggle = (e: React.MouseEvent) => {
     if (item.submenu) {
-      setSubmenuOpen(true);
+      e.preventDefault();
+      setSubmenuOpen(!submenuOpen);
+    } else if (onLinkClick) {
+      onLinkClick();
     }
   };
-  const handleMouseLeave = () => {
-    setSubmenuOpen(false);
-  };
+
+  const isActive = path === item.href;
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Link
-        href={item.href}
-        className={`text-17 flex font-medium hover:text-primary capitalized  ${
-          path === item.href ? "text-primary " : " text-muted "
-        }`}
+    <div className="relative w-full ">
+      <div 
+        className="flex items-center justify-between w-full py-1"
+        onClick={handleToggle}
       >
-        {item.label}
-        {item.submenu && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.5em"
-            height="1.5em"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              d="m7 10l5 5l5-5"
-            />
-          </svg>
-        )}
-      </Link>
-      {submenuOpen && (
-        <div
-          className={`absolute py-2 left-0 mt-0.5 w-60 bg-white dark:bg-darklight dark:text-white shadow-lg rounded-lg `}
-          data-aos="fade-up"
-          data-aos-duration="500"
+        <Link
+          href={item.href}
+          className={`text-base font-medium transition-colors ${
+            isActive 
+              ? "text-primary" 
+              : "text-dark/80 dark:text-white/80 hover:text-primary"
+          }`}
+          onClick={(e) => item.submenu && e.preventDefault()}
         >
-          {item.submenu?.map((subItem, index) => (
+          {item.label}
+        </Link>
+        
+        {item.submenu && (
+          <button 
+            aria-label={submenuOpen ? "Collapse submenu" : "Expand submenu"}
+            className="p-1 rounded-md hover:bg-gray-700/50 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              className="transition-transform duration-300 text-white/80"
+              style={{ transform: submenuOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m7 10l5 5l5-5"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Submenu */}
+      {submenuOpen && item.submenu && (
+        <div 
+          className="pl-4 border-l border-gray-700/50 mb-2 overflow-hidden"
+          style={{ animation: 'slideDown 0.2s ease-out forwards' }}
+        >
+          {item.submenu.map((subItem, index) => (
             <Link
               key={index}
               href={subItem.href}
-              className={`block px-4 py-2   ${
+              className={`block py-2.5 text-sm transition-colors ${
                 path === subItem.href
-                  ? "bg-primary text-white"
-                  : "text-black dark:text-white hover:bg-primary"
+                  ? "text-primary"
+                  : "text-dark/70 dark:text-white/70 hover:text-primary"
               }`}
+              onClick={onLinkClick}
             >
               {subItem.label}
             </Link>
@@ -72,4 +91,4 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
   );
 };
 
-export default HeaderLink;
+export default MobileHeaderLink;
